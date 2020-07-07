@@ -47,6 +47,8 @@ Then I ran the following commands - using [sqlite-utils](https://sqlite-utils.re
     sqlite-utils insert loans_150k_plus.db naics_2017 naics_2017.csv --csv
     # Configure the foreign key
     sqlite-utils add-foreign-key loans_150k_plus.db foia_150k_plus NAICSCode naics_2017 id
+    # Add an index to that column
+    sqlite-utils create-index loans_150k_plus.db foia_150k_plus NAICSCode
 
 ## Publishing to Cloud Run
 
