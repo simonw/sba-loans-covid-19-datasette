@@ -32,3 +32,17 @@ I used [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite) to convert the
         -c CD \
         -f BusinessName \
         -f Address
+
+## Publishing to Cloud Run
+
+I published the database by running the following command:
+
+    datasette publish cloudrun \
+        loans_150k_plus.db \
+        --service sba-loans \
+        --source=SBA \
+        --source_url=https://sba.app.box.com/s/tvb0v5i57oa8gc6b5dcm9cyw7y2ms6pp \
+        --title="COVID-19 SBA loans above 150k" \
+        --memory 2Gi \
+        --about=sba-loans-covid-19-datasette \
+        --about_url=https://github.com/simonw/sba-loans-covid-19-datasette
