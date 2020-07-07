@@ -4,6 +4,10 @@ Notes on how I created https://sba-loans-covid-19.datasettes.com/
 
 Twitter thread: https://twitter.com/simonw/status/1280283053726691329
 
+Interesting queries:
+
+* [Top NAICS codes by number of loans](https://sba-loans-covid-19.datasettes.com/loans_150k_plus?sql=with+counts+as+%28select+NAICSCode%2C+count%28*%29+as+num_loan_recipients+from+foia_150k_plus+group+by+NAICSCode+order+by+num_loan_recipients+desc%29%0D%0Aselect+counts.NAICSCode%2C+counts.num_loan_recipients%2C+naics_2017.name%2C+%27https%3A%2F%2Fsba-loans-covid-19.datasettes.com%2Floans_150k_plus%2Ffoia_150k_plus%3F_facet%3DCity%26_facet%3DState%26_facet%3DRaceEthnicity%26_facet%3DBusinessType%26_facet%3DGender%26_facet%3DVeteran%26NAICSCode%3D%27+%7C%7C+NAICSCode+as+view_them+from+counts+join+naics_2017+on+counts.NAICSCode+%3D+naics_2017.id)
+
 ## Data source
 
 I'm using the `150k plus/foia_150k_plus.csv` file from the zip archive released here: https://sba.app.box.com/s/wz72fqag1nd99kj3t9xlq49deoop6gzf
