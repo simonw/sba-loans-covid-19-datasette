@@ -37,7 +37,7 @@ I used [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite) to convert the
 
 The `NAICSCode` column contains six digit NAICS codes, which correspond to different industries.
 
-I downloaded the "6-digit 2017 Code File" XLS file from https://www.census.gov/eos/www/naics/downloadables/downloadables.html and opened it in Numbers, then exported the data back out again as a two column CSV.
+I downloaded the "6-digit 2017 Code File" XLS file from https://www.census.gov/eos/www/naics/downloadables/downloadables.html and opened it in Numbers, then exported the data back out again as a two column CSV: [naics_2017.csv](https://github.com/simonw/sba-loans-covid-19-datasette/blob/main/naics_2017.csv)
 
 Then I ran the following commands - using [sqlite-utils](https://sqlite-utils.readthedocs.io/en/stable/cli.html) - to import that data and set it up as a foreign key from the `NAICSCode` column.
 
