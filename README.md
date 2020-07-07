@@ -33,6 +33,21 @@ I used [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite) to convert the
         -f BusinessName \
         -f Address
 
+## Adding NAICS codes
+
+The `NAICSCode` column contains six digit NAICS codes, which correspond to different industries.
+
+I downloaded the "6-digit 2017 Code File" XLS file from https://www.census.gov/eos/www/naics/downloadables/downloadables.html and opened it in Numbers, then exported the data back out again as a two column CSV.
+
+Then I ran the following commands - using [sqlite-utils](https://sqlite-utils.readthedocs.io/en/stable/cli.html) - to import that data and set it up as a foreign key from the `NAICSCode` column.
+
+    # First create the table with an integer primary key and a text column
+    sqlite-utils create-table loans_150k_plus.db naics_2017 id integer name text --pk=id
+    # Now import the data into it
+    sqlite-utils insert loans_150k_plus.db naics_2017 naics_2017.csv --csv
+    # Configure the foreign key
+    sqlite-utils add-foreign-key loans_150k_plus.db foia_150k_plus NAICSCode naics_2017 id
+
 ## Publishing to Cloud Run
 
 I published the database by running the following command:
