@@ -20,9 +20,9 @@ More downloads (e.g. per-state): https://home.treasury.gov/policy-issues/cares-a
 
 I used [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite) to convert the file to SQLite and make it searchable like this:
 
-    csvs-to-sqlite 150k\ plus/foia_150k_plus.csv \
+    csvs-to-sqlite PPP\ Data\ 150k\ plus.csv \
         -t foia_150k_plus \
-        /tmp/better-loans.db \
+        loans_150k_plus.db \
         -c LoanRange \
         -c City \
         -c State \
@@ -36,6 +36,11 @@ I used [csvs-to-sqlite](https://github.com/simonw/csvs-to-sqlite) to convert the
         -c CD \
         -f BusinessName \
         -f Address
+
+I added indexes to all of the foreign keys and optimized the database like this:
+
+    sqlite-utils index-foreign-keys loans_150k_plus.db
+    sqlite-utils optimize loans_150k_plus.db
 
 ## Adding NAICS codes
 
@@ -61,9 +66,7 @@ I published the database by running the following command:
     datasette publish cloudrun \
         loans_150k_plus.db \
         --service sba-loans \
-        --source=SBA \
-        --source_url=https://sba.app.box.com/s/tvb0v5i57oa8gc6b5dcm9cyw7y2ms6pp \
-        --title="COVID-19 SBA loans above 150k" \
         --memory 2Gi \
-        --about=sba-loans-covid-19-datasette \
-        --about_url=https://github.com/simonw/sba-loans-covid-19-datasette
+        --extra-options "--config facet_time_limit_ms:2000" \
+        --install datasette-block-robots \
+        -m metadata.yml

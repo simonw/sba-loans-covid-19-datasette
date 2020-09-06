@@ -1,0 +1,22 @@
+title: COVID-19 SBA loans above 150k
+source: SBA
+source_url: https://sba.app.box.com/s/tvb0v5i57oa8gc6b5dcm9cyw7y2ms6pp
+about: sba-loans-covid-19-datasette
+about_url: https://github.com/simonw/sba-loans-covid-19-datasette
+databases:
+  loans_150k_plus:
+    tables:
+      foia_150k_plus:
+        facets:
+        - NAICSCode
+        - State
+        - Lender
+        - LoanRange
+plugins:
+  datasette-block-robots:
+    literal: |-
+      User-agent: *
+      Disallow: /
+      User-agent: Bingbot
+      User-agent: Googlebot
+      Disallow:
